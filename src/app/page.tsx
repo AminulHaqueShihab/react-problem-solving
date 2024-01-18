@@ -1,95 +1,56 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
+import Column from '@/components/Column';
+import Container from '@/components/Container';
+import { Button, Center, Grid, IconButton } from '@chakra-ui/react';
+import { useState } from 'react';
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+	const [arr1, setArr1] = useState<number[]>([1, 2, 3, 4]);
+	const [arr2, setArr2] = useState<number[]>([]);
+	const [selected, setSelected] = useState<number[]>([]);
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+	const moveLeft = () => {
+		const newSelected = selected.filter(item => !arr2.includes(item));
+		setArr1([...arr1, ...selected]);
+		setArr2(arr2.filter(item => !selected.includes(item)));
+		setSelected(newSelected);
+	};
+	const moveRight = () => {
+		const newSelected = selected.filter(item => !arr1.includes(item));
+		setArr2([...arr2, ...selected]);
+		setArr1(arr1.filter(item => !selected.includes(item)));
+		setSelected(newSelected);
+	};
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+	return (
+		<Center minH='100vh'>
+			<Grid templateColumns='2fr 1fr 2fr' w='50%' gap={10}>
+				<Container
+					selected={selected}
+					setSelected={setSelected}
+					arr={arr1.sort()}
+					setArr={setArr2}
+				/>
+				<Center gap={4}>
+					<IconButton
+						aria-label=''
+						icon={<FaAngleDoubleLeft />}
+						onClick={moveLeft}
+					/>
+					<IconButton
+						aria-label=''
+						icon={<FaAngleDoubleRight />}
+						onClick={moveRight}
+					/>
+				</Center>
+				<Container
+					selected={selected}
+					setSelected={setSelected}
+					arr={arr2.sort()}
+					setArr={setArr2}
+				/>
+			</Grid>
+		</Center>
+	);
 }
