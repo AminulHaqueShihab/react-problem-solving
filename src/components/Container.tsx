@@ -4,14 +4,12 @@ import { Center, Checkbox, Flex, FlexProps, Text } from '@chakra-ui/react';
 
 type ContainerProps = FlexProps & {
 	arr: number[];
-	setArr: (arr: number[]) => void;
 	selected: number[];
 	setSelected: (selected: number[]) => void;
 };
 
 const Container: FC<ContainerProps> = ({
 	arr,
-	setArr,
 	selected,
 	setSelected,
 }) => {

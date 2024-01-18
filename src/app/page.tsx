@@ -30,7 +30,6 @@ export default function Home() {
 					selected={selected}
 					setSelected={setSelected}
 					arr={arr1.sort()}
-					setArr={setArr2}
 				/>
 				<Center gap={4}>
 					<IconButton
@@ -48,7 +47,6 @@ export default function Home() {
 					selected={selected}
 					setSelected={setSelected}
 					arr={arr2.sort()}
-					setArr={setArr2}
 				/>
 			</Grid>
 		</Center>
